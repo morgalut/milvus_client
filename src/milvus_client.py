@@ -10,7 +10,7 @@ def connect_to_milvus():
         connections.connect(
             alias="default",
             uri="https://in03-9b9fce0682a5279.api.gcp-us-west1.zillizcloud.com",
-            token="api_key_token"
+            token=""
         )
         logging.info("Successfully connected to Milvus.")
     except Exception as e:
@@ -20,10 +20,11 @@ def connect_to_milvus():
 # Define the Milvus collection schema
 fields = [
     FieldSchema(name="id", dtype=DataType.INT64, is_primary=True),
-    FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=768),
-    FieldSchema(name="text", dtype=DataType.VARCHAR, max_length=512),
+    FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=384),  # Ensure the dimension matches your embeddings
+    FieldSchema(name="text", dtype=DataType.VARCHAR, max_length=1000),
     FieldSchema(name="file_name", dtype=DataType.VARCHAR, max_length=100),
 ]
+
 schema = CollectionSchema(fields=fields, description="Document collection for RAG")
 collection_name = "document_collection"
 

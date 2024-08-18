@@ -1,5 +1,3 @@
-# C:\Users\Mor\Desktop\work\src\main.py
-
 from text_extraction import extract_text_from_file
 from embedding import generate_embeddings, insert_embeddings
 from search_and_generate import search_documents, generate_response
@@ -30,7 +28,9 @@ query_embedding = generate_embeddings([query])[0]
 
 # Search and generate response
 search_results = search_documents(query_embedding)
-retrieved_docs = [doc['text'] for doc in search_results['results']]
-response = generate_response(query, retrieved_docs)
-
-print("Generated Response:", response)
+if 'results' in search_results and search_results['results']:
+    retrieved_docs = [doc['text'] for doc in search_results['results']]
+    response = generate_response(query, retrieved_docs)
+    print("Generated Response:", response)
+else:
+    print("No documents retrieved or unexpected response structure.")
